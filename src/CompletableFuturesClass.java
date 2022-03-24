@@ -5,7 +5,19 @@ import java.util.function.Supplier;
 
 public class CompletableFuturesClass {
     public static void show() {
-        Runnable task1 = () -> System.out.println("a");
+        var future = CompletableFuture.supplyAsync(() -> 1);
+        //future.thenRun(() -> System.out.println("Done"));
+        /*future.thenRunAsync(() -> {
+            System.out.println(Thread.currentThread().getName());
+            System.out.println("Done");
+        });*/
+        future.thenAccept(result -> {
+            System.out.println(Thread.currentThread().getName());
+            System.out.println(result);
+        });
+
+
+        /*Runnable task1 = () -> System.out.println("a");
         var future1 = CompletableFuture.runAsync(task1);
 
         Supplier<Integer> task2 = () -> 1;
@@ -17,6 +29,6 @@ public class CompletableFuturesClass {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }
