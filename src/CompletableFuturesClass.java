@@ -16,7 +16,18 @@ public class CompletableFuturesClass {
     }*/
 
     public static void show() {
-        var first = CompletableFuture.supplyAsync(() -> 1);
+        var first = CompletableFuture.supplyAsync(() -> {
+            LongTask.simulate();
+            return 20;
+        });
+
+        var second = CompletableFuture.supplyAsync(() -> 20);
+
+        CompletableFuture.anyOf(first, second)
+                .thenAccept(temp -> System.out.println(temp));
+
+
+        /*var first = CompletableFuture.supplyAsync(() -> 1);
         var second = CompletableFuture.supplyAsync(() -> 2);
         var third = CompletableFuture.supplyAsync(() -> 3);
 
@@ -31,8 +42,7 @@ public class CompletableFuturesClass {
                 e.printStackTrace();
             }
             System.out.println("All tasks completed successfully");
-        });
-
+        });*/
 
         /*var first = CompletableFuture
                 .supplyAsync(() -> "20USD")
