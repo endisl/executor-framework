@@ -1,18 +1,28 @@
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ForkJoinPool;
-import java.util.function.Supplier;
 
 public class CompletableFuturesClass {
-    public static int toFahrenheit(int celsius) {
-        return (int) (celsius * 1.8) + 32;
+    public static CompletableFuture<String> getUserEmailAsync() {
+        return CompletableFuture.supplyAsync(() -> "email");
     }
 
+    public static CompletableFuture<String> getPlaylistAsync(String email) {
+        return CompletableFuture.supplyAsync(() -> "playlist");
+    }
+
+    /*public static int toFahrenheit(int celsius) {
+        return (int) (celsius * 1.8) + 32;
+    }*/
+
     public static void show() {
-        var future = CompletableFuture.supplyAsync(() -> 20);
+        getUserEmailAsync()
+          .thenCompose(CompletableFuturesClass::getPlaylistAsync)
+          .thenAccept(playlist -> System.out.println(playlist));
+
+
+        /*var future = CompletableFuture.supplyAsync(() -> 20);
         future
                 .thenApply(CompletableFuturesClass::toFahrenheit)
-                .thenAccept(f -> System.out.println(f));
+                .thenAccept(f -> System.out.println(f));*/
 
         /*var future = CompletableFuture.supplyAsync(() -> {
             System.out.println("Getting the current weather");
