@@ -1,4 +1,5 @@
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class CompletableFuturesClass {
 
@@ -15,7 +16,25 @@ public class CompletableFuturesClass {
     }*/
 
     public static void show() {
-        var first = CompletableFuture
+        var first = CompletableFuture.supplyAsync(() -> 1);
+        var second = CompletableFuture.supplyAsync(() -> 2);
+        var third = CompletableFuture.supplyAsync(() -> 3);
+
+        var all = CompletableFuture.allOf(first, second, third);
+        all.thenRun(() -> {
+            try {
+                var firstResult = first.get();
+                System.out.println(firstResult);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            System.out.println("All tasks completed successfully");
+        });
+
+
+        /*var first = CompletableFuture
                 .supplyAsync(() -> "20USD")
                 .thenApply(str-> {
                     var price = str.replace("USD", "");
@@ -25,7 +44,7 @@ public class CompletableFuturesClass {
 
         first
            .thenCombine(second, (price, exchangeRate) -> price * exchangeRate)
-           .thenAccept(result -> System.out.println(result));
+           .thenAccept(result -> System.out.println(result));*/
 
         /*getUserEmailAsync()
           .thenCompose(CompletableFuturesClass::getPlaylistAsync)
