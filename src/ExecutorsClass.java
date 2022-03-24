@@ -1,7 +1,5 @@
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class ExecutorsClass {
 
@@ -16,13 +14,12 @@ public class ExecutorsClass {
 
             System.out.println("Do more work");
             try {
-                var result = future.get();
+                var result = future.get(); //blocking method
                 System.out.println(result);
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
-        }
-        finally {
+        } finally {
             executor.shutdown();
         }
     }

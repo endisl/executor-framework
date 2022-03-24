@@ -2,6 +2,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ExecutorsClass.show();
+        //ExecutorsClass.show();
+        CompletableFuturesClass.show();
     }
 }
