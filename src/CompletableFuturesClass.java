@@ -4,8 +4,17 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.function.Supplier;
 
 public class CompletableFuturesClass {
+    public static int toFahrenheit(int celsius) {
+        return (int) (celsius * 1.8) + 32;
+    }
+
     public static void show() {
-        var future = CompletableFuture.supplyAsync(() -> {
+        var future = CompletableFuture.supplyAsync(() -> 20);
+        future
+                .thenApply(CompletableFuturesClass::toFahrenheit)
+                .thenAccept(f -> System.out.println(f));
+
+        /*var future = CompletableFuture.supplyAsync(() -> {
             System.out.println("Getting the current weather");
             throw new IllegalStateException();
         });
@@ -17,8 +26,7 @@ public class CompletableFuturesClass {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
-        }
-
+        }*/
 
         /*var future = CompletableFuture.supplyAsync(() -> 1);
         future.thenRun(() -> System.out.println("Done"));
