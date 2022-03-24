@@ -1,5 +1,6 @@
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 public class CompletableFuturesClass {
 
@@ -16,7 +17,23 @@ public class CompletableFuturesClass {
     }*/
 
     public static void show() {
-        var first = CompletableFuture.supplyAsync(() -> {
+        var future = CompletableFuture.supplyAsync(() -> {
+            LongTask.simulate();
+            return 1;
+        });
+
+        try {
+            var result = future
+                    .completeOnTimeout(1, 1, TimeUnit.SECONDS)
+                    .get();
+            System.out.println(result);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        /*var first = CompletableFuture.supplyAsync(() -> {
             LongTask.simulate();
             return 20;
         });
@@ -24,7 +41,7 @@ public class CompletableFuturesClass {
         var second = CompletableFuture.supplyAsync(() -> 20);
 
         CompletableFuture.anyOf(first, second)
-                .thenAccept(temp -> System.out.println(temp));
+                .thenAccept(temp -> System.out.println(temp));*/
 
 
         /*var first = CompletableFuture.supplyAsync(() -> 1);
