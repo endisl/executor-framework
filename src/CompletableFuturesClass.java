@@ -1,22 +1,35 @@
 import java.util.concurrent.CompletableFuture;
 
 public class CompletableFuturesClass {
-    public static CompletableFuture<String> getUserEmailAsync() {
+
+    /*public static CompletableFuture<String> getUserEmailAsync() {
         return CompletableFuture.supplyAsync(() -> "email");
     }
 
     public static CompletableFuture<String> getPlaylistAsync(String email) {
         return CompletableFuture.supplyAsync(() -> "playlist");
-    }
+    }*/
 
     /*public static int toFahrenheit(int celsius) {
         return (int) (celsius * 1.8) + 32;
     }*/
 
     public static void show() {
-        getUserEmailAsync()
+        var first = CompletableFuture
+                .supplyAsync(() -> "20USD")
+                .thenApply(str-> {
+                    var price = str.replace("USD", "");
+                    return Integer.parseInt(price);
+                });
+        var second = CompletableFuture.supplyAsync(() -> 0.9);
+
+        first
+           .thenCombine(second, (price, exchangeRate) -> price * exchangeRate)
+           .thenAccept(result -> System.out.println(result));
+
+        /*getUserEmailAsync()
           .thenCompose(CompletableFuturesClass::getPlaylistAsync)
-          .thenAccept(playlist -> System.out.println(playlist));
+          .thenAccept(playlist -> System.out.println(playlist));*/
 
 
         /*var future = CompletableFuture.supplyAsync(() -> 20);
