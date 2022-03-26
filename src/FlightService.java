@@ -8,9 +8,10 @@ public class FlightService {
         return CompletableFuture.supplyAsync(() -> {
             System.out.println("Getting a quote from " + site);
 
-            LongTask.simulate();
-
             var random = new Random();
+
+            LongTask.simulate(1_000 + random.nextInt(2_000));
+
             var price = 100 + random.nextInt(10);
 
             return new Quote(site, price);
